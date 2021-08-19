@@ -4,12 +4,13 @@ const cheerio = require("cheerio");
 const getURL = (url) => decodeURIComponent(url.split("=").pop());
 
 class ProxyScraper {
-  constructor(baseUrl = "") {
+  constructor({ baseUrl = "", parseUrl = true }) {
     this.baseUrl = baseUrl;
+    this.parseUrl = parseUrl;
   }
   async get(path, alter = false) {
     try {
-      const { data } = await axios({
+      let { data } = await axios({
         url: alter
           ? "https://i.nakedmaya.com/index.php"
           : "http://duckproxy.com/indexa.php",
@@ -22,7 +23,8 @@ class ProxyScraper {
         method: "POST",
         mode: "cors",
       });
-      return cheerio.load(data.replace(/http.*"/g, getURL));
+      if (this.parseUrl) data = data.replace(/http.*?"/g, getURL);
+      return cheerio.load(data);
     } catch (error) {
       if (!alter) return await proxyRequest(path, true);
       throw new Error(error);
