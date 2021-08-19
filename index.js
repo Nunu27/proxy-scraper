@@ -1,11 +1,13 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 
+const getURL = (url) => decodeURIComponent(url.split("=").pop());
+
 class ProxyScraper {
   constructor(baseUrl = "") {
     this.baseUrl = baseUrl;
   }
-  async proxyScrape(path, alter = false) {
+  async get(path, alter = false) {
     try {
       const { data } = await axios({
         url: alter
@@ -20,7 +22,7 @@ class ProxyScraper {
         method: "POST",
         mode: "cors",
       });
-      return cheerio.load(data);
+      return cheerio.load(data.replace(/http.*"/g, getURL));
     } catch (error) {
       if (!alter) return await proxyRequest(path, true);
       throw new Error(error);
