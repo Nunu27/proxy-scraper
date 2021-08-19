@@ -23,7 +23,7 @@ class ProxyScraper {
         method: "POST",
         mode: "cors",
       });
-      if (this.parseUrl) data = data.replace(/http.?*=.*?"/g, getURL);
+      if (this.parseUrl) data = data.replace(/http.*?=.*?"/g, getURL);
       return cheerio.load(data);
     } catch (error) {
       if (!alter) return await this.get(path, true);
