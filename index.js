@@ -28,4 +28,4 @@ class ProxyScraper {
   }
 }
 
-export default ProxyScraper;
+module.exports = ProxyScraper;
