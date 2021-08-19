@@ -26,7 +26,7 @@ class ProxyScraper {
       if (this.parseUrl) data = data.replace(/http.?*=.*?"/g, getURL);
       return cheerio.load(data);
     } catch (error) {
-      if (!alter) return await proxyRequest(path, true);
+      if (!alter) return await this.get(path, true);
       throw new Error(error);
     }
   }
