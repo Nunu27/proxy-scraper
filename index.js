@@ -14,7 +14,10 @@ class ProxyScraper {
         (alter
           ? "https://i.nakedmaya.com/index.php"
           : "http://duckproxy.com/indexa.php") +
-          `?q=${encodeURIComponent(this.baseUrl + path)}`,
+          `?${new URLSearchParams({
+            q: this.baseUrl + path,
+            hl: 40,
+          })}`,
         {
           headers: {
             cookie: "flags=120",
