@@ -25,7 +25,7 @@ class ProxyScraper {
           })}`,
         {
           headers: {
-            cookie: "flags=120",
+            cookie: "flags=40",
           },
         }
       );
